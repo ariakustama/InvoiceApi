@@ -56,7 +56,6 @@
 	// to configure GetSchemaOptions properties, add them here, before load metadata call
 
 	LoadSqlServerMetadata("ARIAKUSTAMA\\MSSQLSERVER01", "invoicedb", "sa", "anjingbalap"); //Local Aria
-//  LoadSqlServerMetadata("172.16.1.3", "medicodb", "sa", ".C%4*y2:-=6~jZQ"); //Dev <== Mau Generate dari sini aja
 //	LoadSqlServerMetadata(".", "MyDatabase"); // Integrated Security
 //	LoadSqlServerMetadata(string connectionString);
 

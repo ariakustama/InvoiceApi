@@ -86,18 +86,19 @@ namespace InvoiceAPI.Models.Db
 	[Table(Schema="dbo", Name="customers")]
 	public partial class Customer
 	{
-		[PrimaryKey, NotNull    ] public string Id              { get; set; } // varchar(36)
-		[Column,     NotNull    ] public string CustomerName    { get; set; } // varchar(225)
-		[Column,        Nullable] public string CustomerAddress { get; set; } // varchar(225)
-		[Column,        Nullable] public string CUstomerLogo    { get; set; } // varchar(225)
+		[PrimaryKey, NotNull    ] public string    Id              { get; set; } // varchar(36)
+		[Column,     NotNull    ] public string    CustomerName    { get; set; } // varchar(225)
+		[Column,        Nullable] public string    CustomerAddress { get; set; } // varchar(225)
+		[Column,        Nullable] public string    CUstomerLogo    { get; set; } // varchar(225)
+		[Column,        Nullable] public DateTime? DeletedAt       { get; set; } // datetime
 
 		#region Associations
 
 		/// <summary>
-		/// FK__invoices__Custom__4AB81AF0_BackReference
+		/// FK__invoices__Custom__628FA481_BackReference
 		/// </summary>
 		[Association(ThisKey="Id", OtherKey="CustomerId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
-		public IEnumerable<Invoice> invoicesCustom4AB81AF { get; set; }
+		public IEnumerable<Invoice> invoicesCustom628FA { get; set; }
 
 		#endregion
 	}
@@ -111,6 +112,7 @@ namespace InvoiceAPI.Models.Db
 		[Column,     NotNull    ] public string    CurrencyId          { get; set; } // varchar(36)
 		[Column,     NotNull    ] public string    LanguageId          { get; set; } // varchar(36)
 		[Column,     NotNull    ] public string    PurchaseOrderNumber { get; set; } // varchar(36)
+		[Column,        Nullable] public string    CustomerName        { get; set; } // varchar(225)
 		[Column,     NotNull    ] public string    InvoiceNumber       { get; set; } // varchar(36)
 		[Column,     NotNull    ] public DateTime  InvoiceDate         { get; set; } // datetime
 		[Column,     NotNull    ] public DateTime  InvoiceDue          { get; set; } // datetime
@@ -124,33 +126,33 @@ namespace InvoiceAPI.Models.Db
 		#region Associations
 
 		/// <summary>
-		/// FK__invoices__Curren__4BAC3F29
+		/// FK__invoices__Curren__619B8048
 		/// </summary>
-		[Association(ThisKey="CurrencyId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Curren__4BAC3F29", BackReferenceName="invoicesCurren4BAC3F")]
+		[Association(ThisKey="CurrencyId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Curren__619B8048", BackReferenceName="invoicesCurren619B")]
 		public StaticData Currency { get; set; }
 
 		/// <summary>
-		/// FK__invoices__Custom__4AB81AF0
+		/// FK__invoices__Custom__628FA481
 		/// </summary>
-		[Association(ThisKey="CustomerId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Custom__4AB81AF0", BackReferenceName="invoicesCustom4AB81AF")]
+		[Association(ThisKey="CustomerId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Custom__628FA481", BackReferenceName="invoicesCustom628FA")]
 		public Customer Customer { get; set; }
 
 		/// <summary>
-		/// FK__invoiceDe__Invoi__4D94879B_BackReference
+		/// FK__invoiceDe__Invoi__04E4BC85_BackReference
 		/// </summary>
 		[Association(ThisKey="Id", OtherKey="InvoiceId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
-		public IEnumerable<InvoiceDetail> invoiceDeInvoi4D94879B { get; set; }
+		public IEnumerable<InvoiceDetail> invoiceDeInvoi04E4BC { get; set; }
 
 		/// <summary>
-		/// FK__invoices__Langua__4CA06362
+		/// FK__invoices__Langua__6383C8BA
 		/// </summary>
-		[Association(ThisKey="LanguageId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Langua__4CA06362", BackReferenceName="invoicesLangua4CA")]
+		[Association(ThisKey="LanguageId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Langua__6383C8BA", BackReferenceName="invoicesLangua6383C8BA")]
 		public StaticData Language { get; set; }
 
 		/// <summary>
-		/// FK__invoices__Purcha__49C3F6B7
+		/// FK__invoices__Purcha__6477ECF3
 		/// </summary>
-		[Association(ThisKey="PurchaseOrderId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Purcha__49C3F6B7", BackReferenceName="invoicesPurcha49C3F6B")]
+		[Association(ThisKey="PurchaseOrderId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoices__Purcha__6477ECF3", BackReferenceName="invoicesPurcha6477ECF")]
 		public PurchaseOrder PurchaseOrder { get; set; }
 
 		#endregion
@@ -163,6 +165,7 @@ namespace InvoiceAPI.Models.Db
 		[Column,     NotNull    ] public string    InvoiceId         { get; set; } // varchar(36)
 		[Column,     NotNull    ] public string    UomId             { get; set; } // varchar(36)
 		[Column,     NotNull    ] public string    InvoiceDetailName { get; set; } // text
+		[Column,     NotNull    ] public string    UomName           { get; set; } // varchar(225)
 		[Column,     NotNull    ] public decimal   InvoiceDetailRate { get; set; } // decimal(18, 2)
 		[Column,     NotNull    ] public decimal   InvoiceDetailQty  { get; set; } // decimal(18, 2)
 		[Column,     NotNull    ] public DateTime  AddDate           { get; set; } // datetime
@@ -172,15 +175,15 @@ namespace InvoiceAPI.Models.Db
 		#region Associations
 
 		/// <summary>
-		/// FK__invoiceDe__Invoi__4D94879B
+		/// FK__invoiceDe__Invoi__04E4BC85
 		/// </summary>
-		[Association(ThisKey="InvoiceId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoiceDe__Invoi__4D94879B", BackReferenceName="invoiceDeInvoi4D94879B")]
+		[Association(ThisKey="InvoiceId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoiceDe__Invoi__04E4BC85", BackReferenceName="invoiceDeInvoi04E4BC")]
 		public Invoice Invoice { get; set; }
 
 		/// <summary>
-		/// FK__invoiceDe__UomId__4E88ABD4
+		/// FK__invoiceDe__UomId__05D8E0BE
 		/// </summary>
-		[Association(ThisKey="UomId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoiceDe__UomId__4E88ABD4", BackReferenceName="invoiceDeUomId4E88ABD")]
+		[Association(ThisKey="UomId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK__invoiceDe__UomId__05D8E0BE", BackReferenceName="invoiceDeUomId05D8E0BE")]
 		public StaticData Uom { get; set; }
 
 		#endregion
@@ -189,18 +192,19 @@ namespace InvoiceAPI.Models.Db
 	[Table(Schema="dbo", Name="purchaseOrders")]
 	public partial class PurchaseOrder
 	{
-		[PrimaryKey, NotNull    ] public string  Id                  { get; set; } // varchar(36)
-		[Column,     NotNull    ] public string  PurchaseOrderNumber { get; set; } // varchar(36)
-		[Column,     NotNull    ] public decimal Amount              { get; set; } // decimal(18, 2)
-		[Column,        Nullable] public string  PIC                 { get; set; } // varchar(225)
+		[PrimaryKey, NotNull    ] public string    Id                  { get; set; } // varchar(36)
+		[Column,     NotNull    ] public string    PurchaseOrderNumber { get; set; } // varchar(36)
+		[Column,     NotNull    ] public decimal   Amount              { get; set; } // decimal(18, 2)
+		[Column,        Nullable] public string    PIC                 { get; set; } // varchar(225)
+		[Column,        Nullable] public DateTime? DeletedAt           { get; set; } // datetime
 
 		#region Associations
 
 		/// <summary>
-		/// FK__invoices__Purcha__49C3F6B7_BackReference
+		/// FK__invoices__Purcha__6477ECF3_BackReference
 		/// </summary>
 		[Association(ThisKey="Id", OtherKey="PurchaseOrderId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
-		public IEnumerable<Invoice> invoicesPurcha49C3F6B { get; set; }
+		public IEnumerable<Invoice> invoicesPurcha6477ECF { get; set; }
 
 		#endregion
 	}
@@ -216,22 +220,22 @@ namespace InvoiceAPI.Models.Db
 		#region Associations
 
 		/// <summary>
-		/// FK__invoiceDe__UomId__4E88ABD4_BackReference
+		/// FK__invoiceDe__UomId__05D8E0BE_BackReference
 		/// </summary>
 		[Association(ThisKey="Id", OtherKey="UomId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
-		public IEnumerable<InvoiceDetail> invoiceDeUomId4E88ABD { get; set; }
+		public IEnumerable<InvoiceDetail> invoiceDeUomId05D8E0BE { get; set; }
 
 		/// <summary>
-		/// FK__invoices__Curren__4BAC3F29_BackReference
+		/// FK__invoices__Curren__619B8048_BackReference
 		/// </summary>
 		[Association(ThisKey="Id", OtherKey="CurrencyId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
-		public IEnumerable<Invoice> invoicesCurren4BAC3F { get; set; }
+		public IEnumerable<Invoice> invoicesCurren619B { get; set; }
 
 		/// <summary>
-		/// FK__invoices__Langua__4CA06362_BackReference
+		/// FK__invoices__Langua__6383C8BA_BackReference
 		/// </summary>
 		[Association(ThisKey="Id", OtherKey="LanguageId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
-		public IEnumerable<Invoice> invoicesLangua4CA { get; set; }
+		public IEnumerable<Invoice> invoicesLangua6383C8BA { get; set; }
 
 		#endregion
 	}

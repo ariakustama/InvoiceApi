@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+
     <!--DevExtreme Depencencies-->
     <PackageReference Include="DevExtreme.AspNet.Core" Version="18.2.8" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.2.1" />
